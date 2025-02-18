@@ -8,6 +8,15 @@ namespace _2DEngineProject._2DEngineProject
 {
     public class GameObject
     {
+        public enum eMoveDirection
+        {
+            UP,
+            LEFT,
+            DOWN,
+            RIGHT
+        }
+
+
         int _posX;
         int _posY;
         char _shape;

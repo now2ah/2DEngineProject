@@ -8,14 +8,6 @@ namespace _2DEngineProject._2DEngineProject
 {
     public class Monster : GameObject
     {
-        public enum eMoveDirection
-        {
-            UP,
-            LEFT,
-            DOWN,
-            RIGHT
-        }
-
         public Monster()
         {
             PosX = 5;

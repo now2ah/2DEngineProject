@@ -47,6 +47,7 @@ namespace _2DEngineProject._2DEngineProject
         public void Run()
         {
             _world.StartWorld();
+            _Render();
             while (_isRunning)
             {
                 _ProcessInput();

@@ -24,8 +24,6 @@ namespace _2DEngineProject._2DEngineProject
             IsValid = true;
         }
 
-
-
         public override void Update()
         {
             if (!IsValid)
@@ -57,28 +55,28 @@ namespace _2DEngineProject._2DEngineProject
         {
             ConsoleKey key = Engine.GetInstance().Input.KeyInfo.Key;
 
-            if (key == ConsoleKey.W)
+            if (key == ConsoleKey.W || key == ConsoleKey.UpArrow)
             {
-                if (PosY > 1)
-                    PosY--;
+                if (_IsValidMove(eMoveDirection.UP))
+                    _Move(eMoveDirection.UP);
             }
 
-            if (key == ConsoleKey.A)
+            if (key == ConsoleKey.A || key == ConsoleKey.LeftArrow)
             {
-                if (PosX > 1)
-                    PosX--;
+                if (_IsValidMove(eMoveDirection.LEFT))
+                    _Move(eMoveDirection.LEFT);
             }
 
-            if (key == ConsoleKey.S)
+            if (key == ConsoleKey.S || key == ConsoleKey.DownArrow)
             {
-                if (PosY < 9)
-                    PosY++;
+                if (_IsValidMove(eMoveDirection.DOWN))
+                    _Move(eMoveDirection.DOWN);
             }
 
-            if (key == ConsoleKey.D)
+            if (key == ConsoleKey.D || key == ConsoleKey.RightArrow)
             {
-                if (PosX < 9)
-                    PosX++;
+                if (_IsValidMove(eMoveDirection.RIGHT))
+                    _Move(eMoveDirection.RIGHT);
             }
         }
 
@@ -112,6 +110,71 @@ namespace _2DEngineProject._2DEngineProject
                 }
             }
             return false;
+        }
+
+        bool _IsValidMove(eMoveDirection direction)
+        {
+            if (direction == eMoveDirection.UP)
+            {
+                int newY = PosY - 1;
+
+                if (newY < 0)
+                    return false;
+
+                if (!Engine.GetInstance().World.TileMap[PosX, newY].IsWalkable)
+                    return false;
+            }
+            else if (direction == eMoveDirection.LEFT)
+            {
+                int newX = PosX - 1;
+
+                if (newX < 0)
+                    return false;
+
+                if (!Engine.GetInstance().World.TileMap[newX, PosY].IsWalkable)
+                    return false;
+            }
+            else if (direction == eMoveDirection.DOWN)
+            {
+                int newY = PosY + 1;
+
+                if (newY >= Engine.GetInstance().World.TileMap.GetLength(0))
+                    return false;
+
+                if (!Engine.GetInstance().World.TileMap[PosX, newY].IsWalkable)
+                    return false;
+            }
+            else if (direction == eMoveDirection.RIGHT)
+            {
+                int newX = PosX + 1;
+
+                if (newX >= Engine.GetInstance().World.TileMap.GetLength(1))
+                    return false;
+
+                if (!Engine.GetInstance().World.TileMap[newX, PosY].IsWalkable)
+                    return false;
+            }
+            return true;
+        }
+
+        void _Move(eMoveDirection direction)
+        {
+            if (direction == eMoveDirection.UP)
+            {
+                PosY--;
+            }
+            else if (direction == eMoveDirection.LEFT)
+            {
+                PosX--;
+            }
+            else if (direction == eMoveDirection.DOWN)
+            {
+                PosY++;
+            }
+            else if (direction == eMoveDirection.RIGHT)
+            {
+                PosX++;
+            }
         }
     }
 }
